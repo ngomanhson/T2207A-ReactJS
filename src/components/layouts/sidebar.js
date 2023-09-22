@@ -1,39 +1,42 @@
+import { useState, useEffect } from "react";
+
 export default function Sidebar() {
+    const [categories, setCategories] = useState([]);
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        console.log("A");
+    }, [categories]); // Truyen vao 2 tham so (function, [])
+
+    useEffect(() => {
+        console.log("B");
+    }, [count]);
+
+    useEffect(() => {
+        // Noi de goi API vao lay data
+        // Sau do set data vao trong state
+        fetch("https://localhost:7200/api/category")
+            // Convert string to JSON object <=> JSON.parse
+            .then((data) => data.json())
+            .then((data) => {
+                // Set data cho state
+                setCategories(data);
+            });
+    }, []); // Chi chay 1 lan sau khi lam giao dien
+
+    const changeCount = () => {
+        setCount(count + 1);
+    };
+
     return (
         <div className="sidebar">
             <div className="sidebar__item">
-                <h4>Department</h4>
+                <h4 onClick={changeCount}>Department</h4>
                 <ul>
-                    <li>
-                        <a href="#">Fresh Meat</a>
-                    </li>
-                    <li>
-                        <a href="#">Vegetables</a>
-                    </li>
-                    <li>
-                        <a href="#">Fruit & Nut Gifts</a>
-                    </li>
-                    <li>
-                        <a href="#">Fresh Berries</a>
-                    </li>
-                    <li>
-                        <a href="#">Ocean Foods</a>
-                    </li>
-                    <li>
-                        <a href="#">Butter & Eggs</a>
-                    </li>
-                    <li>
-                        <a href="#">Fastfood</a>
-                    </li>
-                    <li>
-                        <a href="#">Fresh Onion</a>
-                    </li>
-                    <li>
-                        <a href="#">Papayaya & Crisps</a>
-                    </li>
-                    <li>
-                        <a href="#">Oatmeal</a>
-                    </li>
+                    {categories.map((item, index) => (
+                        <li key={index}>
+                            <a href="#">{item.name}</a>
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className="sidebar__item">
