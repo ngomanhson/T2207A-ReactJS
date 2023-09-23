@@ -1,6 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 export default function Header() {
+    const [active, setActive] = useState("");
+
+    const handleClick = (e) => {
+        setActive(e);
+    };
+
     return (
         <header className="header">
             <div className="header__top">
@@ -19,16 +26,16 @@ export default function Header() {
                         <div className="col-lg-6">
                             <div className="header__top__right">
                                 <div className="header__top__right__social">
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-facebook"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-twitter"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-linkedin"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-pinterest-p"></i>
                                     </a>
                                 </div>
@@ -38,15 +45,15 @@ export default function Header() {
                                     <span className="arrow_carrot-down"></span>
                                     <ul>
                                         <li>
-                                            <a href="#">Spanis</a>
+                                            <a href="#!">Spanis</a>
                                         </li>
                                         <li>
-                                            <a href="#">English</a>
+                                            <a href="#!">English</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="header__top__right__auth">
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-user"></i> Login
                                     </a>
                                 </div>
@@ -59,42 +66,54 @@ export default function Header() {
                 <div className="row">
                     <div className="col-lg-3">
                         <div className="header__logo">
-                            <a href="./index.html">
+                            <a href="/">
                                 <img src="img/logo.png" alt="" />
                             </a>
                         </div>
                     </div>
                     <div className="col-lg-6">
                         <nav className="header__menu">
-                            <ul>
-                                <li className="active">
-                                    <NavLink to="/">Home</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/shop">Shop</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/blog">Blog</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/contact">Contact</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/about-us">About us</NavLink>
-                                </li>
-                            </ul>
+                            <nav className="header__menu">
+                                <ul>
+                                    <li className={active === "/" ? "active" : ""}>
+                                        <NavLink to="/" onClick={() => handleClick("/")}>
+                                            Home
+                                        </NavLink>
+                                    </li>
+                                    <li className={active === "/shop" ? "active" : ""}>
+                                        <NavLink to="/shop" onClick={() => handleClick("/shop")}>
+                                            Shop
+                                        </NavLink>
+                                    </li>
+                                    <li className={active === "/blog" ? "active" : ""}>
+                                        <NavLink to="/blog" onClick={() => handleClick("/blog")}>
+                                            Blog
+                                        </NavLink>
+                                    </li>
+                                    <li className={active === "/contact" ? "active" : ""}>
+                                        <NavLink to="/contact" onClick={() => handleClick("/contact")}>
+                                            Contact
+                                        </NavLink>
+                                    </li>
+                                    <li className={active === "/about-us" ? "active" : ""}>
+                                        <NavLink to="/about-us" onClick={() => handleClick("/about-us")}>
+                                            About us
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </nav>
                         </nav>
                     </div>
                     <div className="col-lg-3">
                         <div className="header__cart">
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-heart"></i> <span>1</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="fa fa-shopping-bag"></i> <span>3</span>
                                     </a>
                                 </li>
