@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../../service/api";
+import url from "../../service/url";
+import { NavLink } from "react-router-dom";
 export default function Hero() {
-    const [item, setSetItem] = useState([
-        "Fresh Meat",
-        "Vegetable",
-        "Fruit & Nut Gifts",
-        "Fresh Berries",
-        "Ocean Foods",
-        "Butter & Eggs",
-        "Fastfood",
-        "Fresh Onion",
-        "Papayaya & Crisps",
-        "Oatmeal",
-        "Fresh Bananas",
-    ]);
+    const [categories, setCategories] = useState([]);
+
+    const loadCategories = async () => {
+        try {
+            const rs = await api.get(url.CATEGORY.LIST);
+
+            setCategories(rs.data);
+        } catch (err) {}
+    };
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
 
     const [menuHidden, setMenuhidden] = useState(false);
 
@@ -38,11 +41,13 @@ export default function Hero() {
                                 <span>All departments</span>
                             </div>
                             <ul id="menu">
-                                {item.map((item, index) => (
-                                    <li key={index}>
-                                        <a href="#">{item}</a>
-                                    </li>
-                                ))}
+                                {categories.map((item, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <NavLink to={`/category/${item.id}`}>{item.name}</NavLink>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </div>
