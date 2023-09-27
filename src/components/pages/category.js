@@ -1,16 +1,24 @@
-import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../layouts/sidebar";
+import { useState, useEffect } from "react";
+import url from "../../service/url";
+import api from "../../service/api";
 
-function Shop() {
-    const [products, setProducts] = useState([]);
+function Category() {
+    const { id } = useParams();
+    const [product, setProduct] = useState([]);
+
+    const loadProduct = async () => {
+        try {
+            const rs = await api.get(`${url.PRODUCT.CATEGORY}?categoryId=${id}`);
+            console.log(rs);
+            setProduct(rs.data);
+        } catch (err) {}
+    };
 
     useEffect(() => {
-        fetch("https://localhost:7200/api/product")
-            .then((data) => data.json())
-            .then((data) => {
-                setProducts(data);
-            });
-    }, []);
+        loadProduct();
+    }, [id]);
 
     return (
         <div className="row">
@@ -18,39 +26,8 @@ function Shop() {
                 <Sidebar />
             </div>
             <div className="col-lg-9 col-md-7">
-                <div className="product__discount">
-                    <div className="section-title product__discount__title">
-                        <h2>Sale Off</h2>
-                    </div>
-                </div>
-                <div className="filter__item">
-                    <div className="row">
-                        <div className="col-lg-4 col-md-5">
-                            <div className="filter__sort">
-                                <span>Sort By</span>
-                                <select>
-                                    <option value="0">Default</option>
-                                    <option value="0">Default</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4">
-                            <div className="filter__found">
-                                <h6>
-                                    <span>16</span> Products found
-                                </h6>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-3">
-                            <div className="filter__option">
-                                <span className="icon_grid-2x2"></span>
-                                <span className="icon_ul"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className="row">
-                    {products.map((item, index) => {
+                    {product.map((item, index) => {
                         return (
                             <div className="col-lg-4 col-md-6 col-sm-6" key={index}>
                                 <div className="product__item">
@@ -84,18 +61,9 @@ function Shop() {
                         );
                     })}
                 </div>
-
-                <div className="product__pagination">
-                    <a href="#!">1</a>
-                    <a href="#!">2</a>
-                    <a href="#!">3</a>
-                    <a href="#!">
-                        <i className="fa fa-long-arrow-right"></i>
-                    </a>
-                </div>
             </div>
         </div>
     );
 }
 
-export default Shop;
+export default Category;

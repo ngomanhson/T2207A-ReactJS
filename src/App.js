@@ -8,6 +8,7 @@ import Home from "./components/pages/home";
 import Shop from "./components/pages/shop";
 import Blog from "./components/pages/blog";
 import Contact from "./components/pages/contact";
+import Category from "./components/pages/category";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/shop" element={<Shop />} />
+                        <Route path="/category/:id" element={<Category />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/contact" element={<Contact />} />
                     </Routes>

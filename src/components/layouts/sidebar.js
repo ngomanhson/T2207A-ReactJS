@@ -1,40 +1,34 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
+import api from "../../service/api";
+import url from "../../service/url";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
     const [categories, setCategories] = useState([]);
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-        console.log("A");
-    }, [categories]); // Truyen vao 2 tham so (function, [])
 
-    useEffect(() => {
-        console.log("B");
-    }, [count]);
+    const loadCategories = async () => {
+        try {
+            const rs = await api.get(url.CATEGORY.LIST);
+
+            setCategories(rs.data);
+        } catch (err) {}
+    };
 
     useEffect(() => {
         // Noi de goi API vao lay data
         // Sau do set data vao trong state
-        fetch("https://localhost:7200/api/category")
-            // Convert string to JSON object <=> JSON.parse
-            .then((data) => data.json())
-            .then((data) => {
-                // Set data cho state
-                setCategories(data);
-            });
+        loadCategories();
     }, []); // Chi chay 1 lan sau khi lam giao dien
-
-    const changeCount = () => {
-        setCount(count + 1);
-    };
 
     return (
         <div className="sidebar">
             <div className="sidebar__item">
-                <h4 onClick={changeCount}>Department</h4>
+                <h4>Department</h4>
                 <ul>
                     {categories.map((item, index) => (
                         <li key={index}>
-                            <a href="#">{item.name}</a>
+                            <NavLink to={`/category/${item.id}`}>{item.name}</NavLink>
                         </li>
                     ))}
                 </ul>
@@ -126,7 +120,7 @@ export default function Sidebar() {
                     <h4>Latest Products</h4>
                     <div className="latest-product__slider owl-carousel">
                         <div className="latest-prdouct__slider__item">
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-1.jpg" alt="" />
                                 </div>
@@ -135,7 +129,7 @@ export default function Sidebar() {
                                     <span>$30.00</span>
                                 </div>
                             </a>
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-2.jpg" alt="" />
                                 </div>
@@ -144,7 +138,7 @@ export default function Sidebar() {
                                     <span>$30.00</span>
                                 </div>
                             </a>
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-3.jpg" alt="" />
                                 </div>
@@ -155,7 +149,7 @@ export default function Sidebar() {
                             </a>
                         </div>
                         <div className="latest-prdouct__slider__item">
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-1.jpg" alt="" />
                                 </div>
@@ -164,7 +158,7 @@ export default function Sidebar() {
                                     <span>$30.00</span>
                                 </div>
                             </a>
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-2.jpg" alt="" />
                                 </div>
@@ -173,7 +167,7 @@ export default function Sidebar() {
                                     <span>$30.00</span>
                                 </div>
                             </a>
-                            <a href="#" className="latest-product__item">
+                            <a href="#!" className="latest-product__item">
                                 <div className="latest-product__item__pic">
                                     <img src="img/latest-product/lp-3.jpg" alt="" />
                                 </div>
