@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Sidebar from "../layouts/sidebar";
 import { useState, useEffect } from "react";
 import url from "../../service/url";
@@ -52,7 +52,7 @@ function Category() {
                                     </div>
                                     <div className="product__item__text">
                                         <h6>
-                                            <a href="#!">{item.name}</a>
+                                            <Link to={`/product/${item.id}`}>{item.name}</Link>
                                         </h6>
                                         <h5>${item.price}</h5>
                                     </div>

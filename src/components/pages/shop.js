@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../layouts/sidebar";
+import { Link } from "react-router-dom";
 
 function Shop() {
     const [products, setProducts] = useState([]);
@@ -75,7 +76,7 @@ function Shop() {
                                     </div>
                                     <div className="product__item__text">
                                         <h6>
-                                            <a href="#!">{item.name}</a>
+                                            <Link to={`/product/${item.id}`}>{item.name}</Link>
                                         </h6>
                                         <h5>${item.price}</h5>
                                     </div>
