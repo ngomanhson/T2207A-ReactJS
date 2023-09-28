@@ -1,25 +1,37 @@
-// Stateless
-// React Hook
-import { useState } from "react";
+import { Link } from "react-router-dom";
+
 function Product(props) {
     // properties
     const product = props.product;
-    const [count, setCount] = useState(0);
-    const add = () => {
-        setCount(count + 1);
-    };
-
     return (
-        <div style={{ margin: 30 + "px" }}>
-            <img src={product.image} alt={product.name} width="200" />
-            <h2>Ten san pham: {product.name}</h2>
-            <p>Gia tien: ${product.price}</p>
-            <p>{count}</p>
-            <button type="button" onClick={add}>
-                Add
-            </button>
+        <div className="product__item">
+            <div className="product__item__pic set-bg">
+                <img src={product.thumbnail} alt={product.name} />
+                <ul className="product__item__pic__hover">
+                    <li>
+                        <a href="#!">
+                            <i className="fa fa-heart"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!">
+                            <i className="fa fa-retweet"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!">
+                            <i className="fa fa-shopping-cart"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div className="product__item__text">
+                <h6>
+                    <Link to={`/product/${product.id}`}>{product.name}</Link>
+                </h6>
+                <h5>${product.price}</h5>
+            </div>
         </div>
     );
 }
-
 export default Product;

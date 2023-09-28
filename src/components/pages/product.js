@@ -1,27 +1,36 @@
 import { useContext, useEffect, useState } from "react";
-import api from "../../../service/api";
-import url from "../../../service/url";
+import api from "../../service/api";
+import url from "../../service/url";
 import { useParams } from "react-router-dom";
-import Related from "../products/related";
-import Context from "../../../context/context";
+import { default as ProductGrid } from "../views/product";
+import Context from "../../context/context";
 
 function Product() {
     const { id } = useParams();
-
     const { state, setState } = useContext(Context); // Connect global state
-
     const [product, setProduct] = useState({
         category: {},
         buy_qty: 1,
     });
 
+    const [relateds, setRelateds] = useState([]);
     const loadProduct = async () => {
-        const rs = await api.get(`${url.PRODUCT.DETAIL}?id=${id}`);
-        setProduct(rs.data);
+        try {
+            const rs = await api.get(url.PRODUCT.DETAIL + `?id=${id}`);
+            setProduct(rs.data);
+        } catch (error) {}
+    };
+
+    const loadRelateds = async () => {
+        try {
+            const rs = await api.get(url.PRODUCT.RELATED + `?id=${id}`);
+            setRelateds(rs.data);
+        } catch (error) {}
     };
 
     useEffect(() => {
         loadProduct();
+        loadRelateds();
     }, [id]);
 
     const changeQty = (e) => {
@@ -51,7 +60,7 @@ function Product() {
     };
 
     return (
-        <div>
+        <>
             <div className="row">
                 <div className="col-lg-6 col-md-6">
                     <div className="product__details__pic">
@@ -59,10 +68,10 @@ function Product() {
                             <img className="product__details__pic__item--large" src={product.thumbnai} alt={product.name} />
                         </div>
                         <div className="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="" />
-                            <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="" />
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="" />
-                            <img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="" />
+                            <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt={product.name} />
+                            <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt={product.name} />
+                            <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt={product.name} />
+                            <img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt={product.name} />
                         </div>
                     </div>
                 </div>
@@ -79,7 +88,10 @@ function Product() {
                             <span>(18 reviews)</span>
                         </div>
                         <div className="product__details__price">${product.price}</div>
-                        <p>{product.description}</p>
+                        <p>
+                            Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac
+                            diam sit amet quam vehicula elementum sed sit amet dui. Proin eget tortor risus.
+                        </p>
                         <div className="product__details__quantity">
                             <div className="quantity">
                                 <div className="pro-qty">
@@ -87,7 +99,7 @@ function Product() {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={addToCart} type="button" className="btn primary-btn">
+                        <button type="button" className="btn primary-btn" onClick={addToCart}>
                             ADD TO CART
                         </button>
                         <button type="button" className="heart-icon" onClick={addFavorites}>
@@ -197,9 +209,23 @@ function Product() {
                     </div>
                 </div>
             </div>
-            <Related />
-        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Related Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {relateds.map((e, k) => {
+                    return (
+                        <div key={k} class="col-lg-3 col-md-4 col-sm-6">
+                            <ProductGrid product={e} />
+                        </div>
+                    );
+                })}
+            </div>
+        </>
     );
 }
-
 export default Product;

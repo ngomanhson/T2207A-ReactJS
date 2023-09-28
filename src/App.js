@@ -9,7 +9,8 @@ import Shop from "./components/pages/shop";
 import Blog from "./components/pages/blog";
 import Contact from "./components/pages/contact";
 import Category from "./components/pages/category";
-import Product from "./components/pages/products/product";
+
+import Product from "./components/pages/product";
 import { useState } from "react";
 import STATE from "./context/initState";
 import { UserProvider } from "./context/context";
