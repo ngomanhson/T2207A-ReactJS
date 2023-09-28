@@ -13,6 +13,7 @@ import Product from "./components/pages/products/product";
 import { useState } from "react";
 import STATE from "./context/initState";
 import { UserProvider } from "./context/context";
+import Cart from "./components/pages/cart";
 
 function App() {
     const [state, setState] = useState(STATE);
@@ -33,6 +34,7 @@ function App() {
                             <Route path="/shop" element={<Shop />} />
                             <Route path="/category/:id" element={<Category />} />
                             <Route path="/product/:id" element={<Product />} />
+                            <Route path="/cart" element={<Cart />} />
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/contact" element={<Contact />} />
                         </Routes>
