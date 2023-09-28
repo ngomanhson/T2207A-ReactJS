@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import Context from "../../context/context";
 
 export default function Header() {
+    const { state, setState } = useContext(Context);
     const [active, setActive] = useState("");
 
     const handleClick = (e) => {
@@ -114,7 +117,7 @@ export default function Header() {
                                 </li>
                                 <li>
                                     <a href="#!">
-                                        <i className="fa fa-shopping-bag"></i> <span>3</span>
+                                        <i className="fa fa-shopping-bag"></i> <span>{state.cart.length}</span>
                                     </a>
                                 </li>
                             </ul>
