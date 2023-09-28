@@ -9,7 +9,7 @@ function Related() {
 
     const loadCategory = async () => {
         try {
-            const rs = await api.get(`${url.PRODUCT.CATEGORY}?categoryId=${id}`);
+            const rs = await api.get(`${url.PRODUCT.RELATED}?id=${id}`);
             setRelatedProducts(rs.data);
         } catch (err) {}
     };
@@ -32,7 +32,7 @@ function Related() {
                     return (
                         <div className="col-lg-3 col-md-4 col-sm-6" key={index}>
                             <div className="product__item">
-                                <div className="product__item__pic set-bg" style={{ backgroundImage: `url(${item.thumbnai})` }}>
+                                <div className="product__item__pic set-bg" style={{ backgroundImage: `url(${item.thumbnail})` }}>
                                     <ul className="product__item__pic__hover">
                                         <li>
                                             <a href="#!">

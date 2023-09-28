@@ -112,7 +112,7 @@ export default function Header() {
                             <ul>
                                 <li>
                                     <a href="#!">
-                                        <i className="fa fa-heart"></i> <span>1</span>
+                                        <i className="fa fa-heart"></i> <span>{state.favorites.length}</span>
                                     </a>
                                 </li>
                                 <li>

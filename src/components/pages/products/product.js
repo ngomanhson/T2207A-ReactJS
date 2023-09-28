@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../../../service/api";
 import url from "../../../service/url";
 import { useParams } from "react-router-dom";
 import Related from "../products/related";
+import Context from "../../../context/context";
 
 function Product() {
     const { id } = useParams();
-    const [product, setProduct] = useState([]);
+
+    const { state, setState } = useContext(Context); // Connect global state
+
+    const [product, setProduct] = useState({
+        category: {},
+        buy_qty: 1,
+    });
 
     const loadProduct = async () => {
         const rs = await api.get(`${url.PRODUCT.DETAIL}?id=${id}`);
@@ -16,6 +23,32 @@ function Product() {
     useEffect(() => {
         loadProduct();
     }, [id]);
+
+    const changeQty = (e) => {
+        const v = e.target.value;
+        setProduct({ ...product, buy_qty: v });
+    };
+
+    const addToCart = () => {
+        const cart = state.cart;
+        cart.push(product);
+        setState({ ...state, cart: cart, loading: true });
+        //x =  [] => [...x,5];
+        setTimeout(() => {
+            setState({ ...state, loading: false });
+        }, 800);
+    };
+
+    const addFavorites = () => {
+        const favorites = state.favorites;
+        favorites.push(product);
+
+        setState({ ...state, favorites: favorites, loading: true });
+
+        setTimeout(() => {
+            setState({ ...state, loading: false });
+        }, 800);
+    };
 
     return (
         <div>
@@ -36,6 +69,7 @@ function Product() {
                 <div className="col-lg-6 col-md-6">
                     <div className="product__details__text">
                         <h3>{product.name}</h3>
+                        <h5>{product.category.name}</h5>
                         <div className="product__details__rating">
                             <i className="fa fa-star"></i>
                             <i className="fa fa-star"></i>
@@ -49,16 +83,16 @@ function Product() {
                         <div className="product__details__quantity">
                             <div className="quantity">
                                 <div className="pro-qty">
-                                    <input type="text" value="1" />
+                                    <input onChange={changeQty} type="text" value={product.buy_qty} />
                                 </div>
                             </div>
                         </div>
-                        <a href="#!" className="primary-btn">
-                            ADD TO CARD
-                        </a>
-                        <a href="#!" className="heart-icon">
+                        <button onClick={addToCart} type="button" className="btn primary-btn">
+                            ADD TO CART
+                        </button>
+                        <button type="button" className="heart-icon" onClick={addFavorites}>
                             <span className="icon_heart_alt"></span>
-                        </a>
+                        </button>
                         <ul>
                             <li>
                                 <b>Availability</b> <span>In Stock</span>
