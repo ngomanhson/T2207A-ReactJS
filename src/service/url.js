@@ -11,6 +11,7 @@ const url = {
         CREATE: "/product",
         DETAIL: "/product/get-by-id",
         CATEGORY: "/product/get-by-categoryId",
+        RELATED: "product/relateds",
     },
 };
 
