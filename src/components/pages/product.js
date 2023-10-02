@@ -4,10 +4,11 @@ import url from "../../service/url";
 import { useParams } from "react-router-dom";
 import { default as ProductGrid } from "../views/product";
 import Context from "../../context/context";
+import ACTION from "../../context/action";
 
 function Product() {
     const { id } = useParams();
-    const { state, setState } = useContext(Context); // Connect global state
+    const { state, dispatch } = useContext(Context); // Connect global state
     const [product, setProduct] = useState({
         category: {},
         buy_qty: 1,
@@ -41,10 +42,13 @@ function Product() {
     const addToCart = () => {
         const cart = state.cart;
         cart.push(product);
-        setState({ ...state, cart: cart, loading: true });
+
+        // dispatch({ ...state, cart: cart, loading: true });
+
+        dispatch({ type: ACTION.UPDATE_CART, payload: cart });
         //x =  [] => [...x,5];
         setTimeout(() => {
-            setState({ ...state, loading: false });
+            dispatch({ type: ACTION.HIDE_LOADING });
         }, 800);
     };
 
@@ -52,10 +56,10 @@ function Product() {
         const favorites = state.favorites;
         favorites.push(product);
 
-        setState({ ...state, favorites: favorites, loading: true });
+        dispatch({ ...state, favorites: favorites, loading: true });
 
         setTimeout(() => {
-            setState({ ...state, loading: false });
+            dispatch({ ...state, loading: false });
         }, 800);
     };
 

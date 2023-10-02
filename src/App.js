@@ -11,15 +11,16 @@ import Contact from "./components/pages/contact";
 import Category from "./components/pages/category";
 
 import Product from "./components/pages/product";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import STATE from "./context/initState";
 import { UserProvider } from "./context/context";
 import Cart from "./components/pages/cart";
+import reducer from "./context/reducer";
 
 function App() {
-    const [state, setState] = useState(STATE);
+    const [state, dispatch] = useReducer(reducer, STATE);
     return (
-        <UserProvider value={{ state, setState }}>
+        <UserProvider value={{ state, dispatch }}>
             <div id="preloder" style={{ opacity: 0.8, display: state.loading ? "block" : "none" }}>
                 <div class="loader"></div>
             </div>
