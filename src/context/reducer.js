@@ -14,6 +14,8 @@ const reducer = (state, action) => {
             return updateLocalStorage({ ...state, loading: true });
         case ACTION.HIDE_LOADING:
             return updateLocalStorage({ ...state, loading: false });
+        case ACTION.LOGIN:
+            return updateLocalStorage({ ...state, token: action.payload.token, user: action.payload.user, loading: true });
     }
 };
 export default reducer;

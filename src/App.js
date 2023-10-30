@@ -16,6 +16,7 @@ import STATE from "./context/initState";
 import { UserProvider } from "./context/context";
 import Cart from "./components/pages/cart";
 import reducer from "./context/reducer";
+import Login from "./components/pages/login";
 
 function App() {
     const [state, dispatch] = useReducer(reducer, STATE);
@@ -39,6 +40,7 @@ function App() {
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/contact" element={<Contact />} />
+                            <Route path="/login" element={<Login />} />
                         </Routes>
                     </div>
                 </section>

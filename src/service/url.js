@@ -13,6 +13,12 @@ const url = {
         CATEGORY: "/product/get-by-categoryId",
         RELATED: "product/relateds",
     },
+
+    USER: {
+        LOGIN: "/auth/login",
+        REGISTER: "/auth/register",
+        PROFILE: "/auth/profile",
+    },
 };
 
 export default url;
